@@ -1,0 +1,30 @@
+data:
+  csv_path: dataset/NASDAQ_100_Data_From_2010.csv
+  feature_cols: null  # 自动检测
+  target_cols: null    # 自动检测
+  time_col: null       # 若有日期列例如 'Date' 可填入
+  lookback: null       # 默认 3*horizon
+
+model:
+  tcn_out: 64
+  expert_cfgs:
+    - {kernel_size: 3, num_levels: 2}
+    - {kernel_size: 5, num_levels: 2}
+    - {kernel_size: 7, num_levels: 2}
+  d_model: 128
+  dropout: 0.1
+  nhead: 4
+  enc_layers: 2
+  dec_layers: 1
+  ff_dim: 256
+  top_query_frac: 0.2
+  distill: true
+
+train:
+  batch_size: 32
+  epochs: 5
+  lr: 0.001
+  save_dir: checkpoints
+
+eval:
+  horizons: [1, 5, 10, 20]
